@@ -1,0 +1,14 @@
+{
+    "name" : "Divyadarshi",
+    "version": "1.0.0",
+    "description": "A UI for watching and managing TV Shows",
+    "main" : "main.js",
+    "scripts": {
+        "start" : "electron ."
+    },
+    "repository" : "https://github.com/debjeetmaj/divyadarshi",
+    "author" : "Debjeet Majumdar",
+    "devDependencies":{
+        "electron" : "~1.6.2"
+    }
+}

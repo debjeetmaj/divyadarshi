@@ -1,0 +1,196 @@
+body{
+    margin:0;
+    padding:0;
+    /*background: linear-gradient(90deg,#ffb88c,#de6262);*/
+    /*background: linear-gradient(90deg,#e43415,#e65245);*/
+    /* background: #4caf50; */
+      background: linear-gradient(90deg,#ece9e6,#ffffff);  
+     /* background: black; */
+    overflow: hidden;
+    /* background: #ffffff; */
+    /* background:  #673ab7; */
+
+}
+#main_content{
+    margin: 5px auto;
+    padding: 5px;
+    /*border:1px solid black;*/
+}
+.navs{
+    width:98%;
+    float:left;
+}
+.contents{
+    width:98%;
+    float:left;
+}
+#add_content{
+    /* visibility: hidden; */
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid #c0c0c0;
+    width: 98%;
+    height: 110px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+#watching_holder{
+    margin: 5px 0;
+    padding: 0;
+    /*border: 1px solid black;*/
+    height: 210px;
+}
+#watching_content{
+    margin: 0;
+    padding: 5px;
+    border: 1px solid #c0c0c0;
+    height: 155px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: #ffffff;
+    border-radius: 5px;
+}
+#library_holder{
+    margin: 5px auto;
+    padding: 0;
+    /*border: 1px solid black;*/
+    /* min-height: 500px; */
+}
+#content{
+    margin: 0;
+    padding: 5px;
+    border: 1px solid #c0c0c0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 500px;
+    background: #ffffff;
+    overflow-y:auto;
+    overflow-x: hidden; 
+}
+ul{
+    list-style-type: none;
+    margin : 0;
+    padding : 0;
+}
+div.header {
+    background-color:  #673ab7;/* #4CAF50;*/
+    color: white;
+    padding: 5px;
+    font-size: 20px;
+}
+div.current_header {
+     background-color:purple;/* #4CAF50; */
+    color: white;
+    padding: 5px;
+    font-size: 20px;
+}
+div.container {
+    padding: 5px;
+}
+div.line{
+    background-color: red;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    opacity: .70;
+    /* Position the tooltip text - see examples below! */
+    position: relative;
+    display: inline-block;
+    left:55%;
+    top:-5px;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+li.tile{
+    display:block;
+    float: left;
+    margin : 5px;
+    padding : 0;
+    /* border : 1px solid #0b0a0a; */
+    width : 13%;
+    height : 130px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    background-color: #ffffff; 
+    border-radius: 5px 5px 5px 5px;
+    /* background: linear-gradient(0deg,#ece9e6,#ffffff); */
+    /*background: black;*/
+    /*color: #efeeef;*/
+    -webkit-app-region : no-drag;
+}
+li.icon_tile{
+    display:block;
+    float: left;
+    margin : 5px;
+    padding : 0;
+    width : 13%;
+      /* height : 130px;   */
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    text-align: center; 
+    background-color: transparent; 
+    /* border-radius: 5px 5px; */
+    /* background: linear-gradient(0deg,#ece9e6,#ffffff); */
+    /*background: black;*/
+    /*color: #efeeef;*/
+    -webkit-app-region : no-drag;
+}
+.nav_bar ul{
+    list-style-type: none;
+    margin : 0;
+    padding : 0;
+}
+.nav_bar li{
+    display:block;
+    float: left;
+    margin : 0 1px 0 1px;
+    padding : 5px;
+     /* border : 1px solid #0b0a0a;  */
+    min-width : 10%;
+    border-radius: 5px 5px;
+    height : 20px;
+    -webkit-app-region : no-drag;
+}
+.non_active{
+     background: #ffffff;  
+    border-color:  #eeeeee;
+     /* color : #ffffff; */
+    text-align: center;
+}
+.active{
+    background-color: #4caf50;
+    border-color: #e8f5e9;
+    color : #ffffff;
+    text-align: center;
+}
+.add_buttons{
+    width : 10%;
+    height : 100px;
+    margin : 2px;
+    padding : 5px;
+}
+.show_tile{
+    width : 10%;
+}
+#progress{
+
+     /* width :50%;  */
+    z-index: 1;
+    background: purple;
+    color: #fff;
+    position: absolute;
+    left:15%;
+    right: 15%;
+    bottom: 2%;
+    /* right:10%; */
+    border-radius: 5px 5px;
+    text-align: center;
+    opacity: .89;
+}

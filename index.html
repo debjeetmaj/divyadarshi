@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TV Shows</title>
+        <link rel="stylesheet" type="text/css" href="./resources/styles/main.css">
+    </head>
+    <body>
+        <div id="main_content">
+             <!-- <div id="add_content">
+                    <Button id="select_directory" class="add_buttons">Add Shows</Button>
+                    <Button id="watch_directory" class="add_buttons">Watch Directory</Button>
+            </div>  -->
+            <div>
+            <div id="watching_holder">
+                <div class="navs">
+                    <ul class="nav_bar">
+                        <li class="active">Last Watched</li>
+                    <ul>
+                </div>
+                <div class="contents" id="watching_content">
+                  <p id="watching_default_message">No Shows Watched...</p>
+                  <ul id="watching_list">
+                      <!--<li class="tile">Arrow</li>
+                      <li class="tile">Better Call Saul</li>-->
+                  </ul>
+                </div>
+            </div>
+            </div>
+
+            <div id="library_holder">
+                <div class="navs">
+                    <ul class="nav_bar" id="library_nav">
+                        <li id="nav1" class="active">Library</li>
+                        <li id="nav2" class="non_active">Season</li>
+                        <li id="nav3" class="non_active">Episode</li>
+                    <ul>
+                </div>
+                <div id="content" class="contents">
+                    <div id="shows_holder">
+                        <p id="empty_message">No Content Added, Drag and Drop Shows Root folder...</p>
+                        <ul id="shows_list">
+                        </ul>
+                    </div>
+                    <div id="seasons_holder">
+                        <p id="seasons_default_msg">Show has no seasons...</p>
+                        <ul id="seasons_list">
+                        </ul>
+                    </div>
+                    <div id="episodes_holder">
+                        <p id="episodes_default_msg">This season has no episodes...</p>
+                        <ul id="episodes_list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="progress">
+                
+            </div>    
+        </div>
+        <script>
+            require('./renderer.js')
+        </script>    
+    </body>
+</html>
