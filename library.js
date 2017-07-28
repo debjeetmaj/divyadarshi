@@ -1,6 +1,6 @@
 // Wrapper for library.json
 var path = require("path")
-var LinkedList = require("linkedlist")
+
 exports.Library = {
       "class" : "Library",
       "constructor" : function(last_id,date_created,last_updated,shows){
