@@ -1,5 +1,5 @@
 // Register OpenFileDialog
-
+console.log("renderer included.")
 const ipc = require('electron').ipcRenderer
 var events = require('events')
 var eventEmitter = new events.EventEmitter()
@@ -15,6 +15,12 @@ const fs = require('fs')
 const path = require('path')
 const TEXT_CLIP_LENGTH = 20
 const PROGRESS_MESSAGE_VANISH_DELAY = 3000 //in ms
+
+var pathseperator = "/"
+
+if (process.platform == 'windows') {
+    pathseperator = "\\"
+}
 watching = null
 library = null
 new_content = []
@@ -24,11 +30,8 @@ currently_on = [-1,-1,-1]
 library_json_path = path.join(__dirname,"resources","json","library.json")
 watching_json_path = path.join(__dirname,"resources","json","watching.json")
 
-ipc.on("initialize",function(event){
-  console.log("Init called...")
-  $("#seasons_holder").hide()
-  $("#episodes_holder").hide()
-})
+$("#seasons_holder").hide()
+$("#episodes_holder").hide()
 
 fs.exists(library_json_path, function(exists){
   if(exists){
@@ -125,25 +128,27 @@ $('#watch_directory').click(function (event){
 })
 // Drag and Drop functionality
 const holder = document.getElementById("content")
-holder.ondragover =() =>{
-  // TODO something with mouse cursor
-  return false;
-}
-holder.ondragleave = holder.ondragend =() => {
-  return false;
-}
-holder.ondrop = (event) =>{
-    event.preventDefault()
-    var lib_updated = false
-    for (let f of event.dataTransfer.files){
-      console.log(f.path)
-      if (fs.lstatSync(f.path).isDirectory())
-      { 
-        // assumption library object is not null
-        add_to_library(f.path)
-      }
-    }
+if(holder!=null){
+  holder.ondragover =() =>{
+    // TODO something with mouse cursor
     return false;
+  }
+  holder.ondragleave = holder.ondragend =() => {
+    return false;
+  }
+  holder.ondrop = (event) =>{
+      event.preventDefault()
+      var lib_updated = false
+      for (let f of event.dataTransfer.files){
+        console.log(f.path)
+        if (fs.lstatSync(f.path).isDirectory())
+        { 
+          // assumption library object is not null
+          add_to_library(f.path)
+        }
+      }
+      return false;
+  }
 }
 ipc.on('selected-directory', function (event, folder) {
   var folders = `${folder}`.split(',')
@@ -208,7 +213,8 @@ function prepare_show_object(folder){
   }
   else{
     var show = Object.create(Show)
-    show.constructor(0,folder.slice(folder.lastIndexOf('\\')+1,folder.length),folder,[],icon_file)
+    var showname = folder.slice(folder.lastIndexOf(pathseperator)+1,folder.length)
+    show.constructor(0,showname,folder,[],icon_file)
     // season_dir.sort(stringComparator)W
     for(var i=0 ; i< season_dir.length; i++){
       season_number = parseInt(season_dir[i].match(/\d+/g)[0])
@@ -264,6 +270,9 @@ function prepare_show_object(folder){
           console.log(dp)
           episode.constructor(epN,dp,file)
           season.add_episode(episode)
+        }
+        else{
+          console.log("Unable to get episode No. from the filenaming.")
         }
       }
       season.episodes.sort(function(x,y){
@@ -360,9 +369,9 @@ function onShowTileClick(index){
     $("#episodes_list").html("")
     for(var i=0;i<show.seasons.length;i++){
       var header_class = "header"
-      if(watching[currently_on[0]] && watching[currently_on[0]][1]== i)
+      if(watching!=null && watching[currently_on[0]] && watching[currently_on[0]][1]== i)
         header_class = "current_header"
-      // $("#seasons_list").append(util.format(liItem,i,header_class,show.seasons[i].season_number,show.seasons[i].display_name,show.seasons[i].file))
+      // $("#seasons_list").append(util.format(liItem,i,header_class,show.seasons[i].season_number,show.seasons[i].display_name,showseasons[i].file))
       $("#seasons_list").append(util.format(liItem,i,header_class,show.seasons[i].season_number,show.seasons[i].display_name))
       $("#season_"+i).data("index",i)
       $("#season_"+i).click(function(){onSeasonTileClick($( this ).data("index"))})
@@ -396,10 +405,10 @@ function onSeasonTileClick(index){
       var ep = season.episodes[i]
       // console.log(JSON.stringify(ep))
       var name = shorten_display_name(ep.display_name)
-      if(watching[currently_on[0]] && watching[currently_on[0]][1]==index && watching[currently_on[0]][2]==i)
-        $("#episodes_list").append(util.format(liItem,i,"current_header",ep.episode_number,name,ep.display_name))
-      else
-        $("#episodes_list").append(util.format(liItem,i,"header",ep.episode_number,name,ep.display_name))
+      var header_class = "header"
+      if(watching !=null && watching[currently_on[0]] && watching[currently_on[0]][1]==index && watching[currently_on[0]][2]==i)
+        header_class = "current_header"
+      $("#episodes_list").append(util.format(liItem,i,header_class,ep.episode_number,name,ep.display_name))
       $("#episode_"+i).data("index",i)
       $("#episode_"+i).click(function(){onEpisodeTileClick($( this ).data("index"),true)})
     }
@@ -416,7 +425,7 @@ function onSeasonTileClick(index){
 }
 function onEpisodeTileClick(index,add_to_watchlist){
   //already watching then change the color of previous watched to normal
-  if(watching[currently_on[0]]!=null && watching[currently_on[0]][1]==currently_on[1]){
+  if(watching!=null && watching[currently_on[0]]!=null && watching[currently_on[0]][1]==currently_on[1]){
       var sel = $("#episode_"+watching[currently_on[0]][2]).children("div.current_header")
       if(sel) 
         sel.attr("class","header")
@@ -527,6 +536,7 @@ function getEpisodeNo(episode_Name){
     // episode_Name = document.getElementById('episodeName').value
     epN = ""
     // episode_Name = document.getElementById('episodeName').value()
+    episode_Name = episode_Name.toUpperCase()
     if(episode_Name.search(/E\d+/g)>=0)
     {
         epN = episode_Name.match(/E\d+/g)[0].replace(/E/g,"")

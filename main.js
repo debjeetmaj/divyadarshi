@@ -31,6 +31,9 @@ function createWindow () {
         slashes : true 
     }))
 
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools()
+
     mainWindow.on('closed', function(){
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
@@ -59,7 +62,6 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
-  event.sender.send('initialize')
 })
 
 ipc.on('open-file-dialog', function (event) {
