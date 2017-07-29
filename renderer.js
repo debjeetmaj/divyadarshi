@@ -18,7 +18,7 @@ const PROGRESS_MESSAGE_VANISH_DELAY = 3000 //in ms
 
 var pathseperator = "/"
 
-if (process.platform == 'windows') {
+if (process.platform == 'win32') {
     pathseperator = "\\"
 }
 watching = null
