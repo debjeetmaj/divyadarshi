@@ -485,10 +485,10 @@ function onWatchingTileClick(show_id,season_id,episode_id){
      var ep = season.episodes[i]
       // console.log(JSON.stringify(ep))
      var name = shorten_display_name(ep.display_name)
+     var header_class = "header"
      if(watching[currently_on[0]] && watching[currently_on[0]][1]==season_id && watching[currently_on[0]][2]==i)
-       $("#episodes_list").append(util.format(liItem,i,"current_header",ep.episode_number,name,ep.display_name))
-     else
-       $("#episodes_list").append(util.format(liItem,i,"header",ep.episode_number,name,ep.display_name))
+      header_class = "current_header"
+     $("#episodes_list").append(util.format(liItem,i,header_class,ep.episode_number,name,ep.display_name))
      $("#episode_"+i).data("index",i)
      $("#episode_"+i).click(function(){onEpisodeTileClick($( this ).data("index"),true)})
     }
@@ -505,7 +505,7 @@ function onWatchingTileClick(show_id,season_id,episode_id){
   $("#nav3").attr("class","active")
   $("#nav3").show()
   $("#nav3").html(season.display_name)
-  showProgress(["Last watching "+ep.display_name])
+  showProgress(["Last watching "+season.episodes[watching[currently_on[0]][2]].display_name])
 }
 
 $("#nav1").click(function(){
