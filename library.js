@@ -10,6 +10,9 @@ exports.Library = {
         this.last_updated = last_updated;
         this.shows = shows;
       },
+      "get_show" : function(id){
+        return this.shows[id];
+      },
       "add_show" : function(show){
           if(this.path_to_index_dict[show.file]==null)
           {
@@ -20,7 +23,8 @@ exports.Library = {
             return this.shows.length-1;
           }
           else {
-          //generate error
+            // update operation
+            this.shows[this.path_to_index_dict[show.file]] = show
             return -1;
           }
       },

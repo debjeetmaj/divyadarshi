@@ -326,6 +326,11 @@ function addLibraryItemTile(index){
   $("#shows_list").append(util.format(icon_liItem,index,icon,index+1,library.shows[index].display_name))      
   $("#show_"+index).data("index",index)
   $("#show_"+index).click(function(){onShowTileClick($( this ).data("index"))})
+  $("#show_"+index).bind('contextmenu', function(e) {
+     e.preventDefault();
+     console.log('The eventhandler will make sure, that the contextmenu dosn&#39;t appear.');
+     ipc.send('show-context-menu',$( this ).data("index"));
+  });
 }
 
 function repaint_watchingview(){
@@ -535,3 +540,15 @@ function  showProgress(progressMessage){
   })
   $("#progress").show().delay(myutil.PROGRESS_MESSAGE_VANISH_DELAY).fadeOut();
 }
+
+ipc.on('refresh-show', function (event,showid) {
+  console.log(showid);
+  console.log(library.get_show(showid).file);
+  var updatedShow = prepare_show_object(library.get_show(showid).file)
+  library.add_show(updatedShow)
+  eventEmitter.emit('library_updated')
+})
+
+ipc.on('delete-show', function (event,showid) {
+  console.log(showid);
+})

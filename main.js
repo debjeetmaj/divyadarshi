@@ -18,6 +18,33 @@ const Tray = electron.Tray
 let mainWindow
 let library
 let appIcon = null
+let showid
+let sender
+const Menu = electron.Menu
+const MenuItem = electron.MenuItem
+const menu = new Menu()
+menu.append(new MenuItem({ label: 'Refresh' ,
+ click(){
+   console.log("refreshing "+ showid);
+   sender.send('refresh-show',showid);
+  }
+}))
+menu.append(new MenuItem({ type: 'separator' }))
+menu.append(new MenuItem({ label: 'Delete',
+click(){
+   console.log("deleting "+ showid);
+    sender.send('delete-show',showid);
+  }
+}))
+
+
+ipc.on('show-context-menu', function (event,id) {
+  // TODO : Use of global should be removed
+  showid = id
+  sender = event.sender
+  const win = BrowserWindow.fromWebContents(event.sender);
+  menu.popup(win);
+})
 
 function createWindow () {
     // create the browser Window
@@ -32,7 +59,7 @@ function createWindow () {
     }))
 
     // Open the DevTools.
-    //mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', function(){
         // Dereference the window object, usually you would store windows
