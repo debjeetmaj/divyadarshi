@@ -13,8 +13,7 @@ var shell =  require('electron').shell
 const $ = require('jquery')
 const fs = require('fs')
 const path = require('path')
-const TEXT_CLIP_LENGTH = 20
-const PROGRESS_MESSAGE_VANISH_DELAY = 3000 //in ms
+const myutil = require('./util.js')
 
 var pathseperator = "/"
 
@@ -264,7 +263,7 @@ function prepare_show_object(folder){
           dp = (episodeList[j].slice(0,episodeList[j].lastIndexOf('.')))
           file = path.join(folder,season_dir[i],episodeList[j])
         }
-        epN = getEpisodeNo(dp)
+        epN = myutil.getEpisodeNo(dp)
         if(!isNaN(epN)){
           dp = dp.replace(/\./g," ")
           console.log(dp)
@@ -344,7 +343,7 @@ function repaint_watchingview(){
     watching["show_ids"].forEach(id =>{
       var ep = library.shows[watching[id][0]].seasons[watching[id][1]].episodes[watching[id][2]]
       // console.log(JSON.stringify(ep))
-      var short_name = shorten_display_name(ep.display_name)
+      var short_name = myutil.shorten_display_name(ep.display_name)
       $("#watching_list").append(util.format(non_icon_liItem,id,ep.episode_number,short_name,ep.display_name))
       $("#w_episode_"+id).data("show_index",id)
       $("#w_episode_"+id).data("season_index",watching[id][1])
@@ -404,7 +403,7 @@ function onSeasonTileClick(index){
     for(var i =0;i<season.episodes.length;i++){
       var ep = season.episodes[i]
       // console.log(JSON.stringify(ep))
-      var name = shorten_display_name(ep.display_name)
+      var name = myutil.shorten_display_name(ep.display_name)
       var header_class = "header"
       if(watching !=null && watching[currently_on[0]] && watching[currently_on[0]][1]==index && watching[currently_on[0]][2]==i)
         header_class = "current_header"
@@ -484,7 +483,7 @@ function onWatchingTileClick(show_id,season_id,episode_id){
    for(var i =0;i<season.episodes.length;i++){
      var ep = season.episodes[i]
       // console.log(JSON.stringify(ep))
-     var name = shorten_display_name(ep.display_name)
+     var name = myutil.shorten_display_name(ep.display_name)
      var header_class = "header"
      if(watching[currently_on[0]] && watching[currently_on[0]][1]==season_id && watching[currently_on[0]][2]==i)
       header_class = "current_header"
@@ -529,48 +528,10 @@ $("#nav2").click(function(){
   currently_on[1] = currently_on[2] = -1
 })
 
-function stringComparator(x,y){
-  return x-y;
-}
-function getEpisodeNo(episode_Name){
-    // episode_Name = document.getElementById('episodeName').value
-    epN = ""
-    // episode_Name = document.getElementById('episodeName').value()
-    episode_Name = episode_Name.toUpperCase()
-    if(episode_Name.search(/E\d+/g)>=0)
-    {
-        epN = episode_Name.match(/E\d+/g)[0].replace(/E/g,"")
-    }
-    else if(episode_Name.search(/\.\d+\./g)>=0){
-        epN = episode_Name.match(/\.\d+\./g)[0].replace(/\./g,"")
-    }
-    else if(episode_Name.search(/x\d+/g)>=0)
-    {
-        epN = episode_Name.match(/x\d+/g)[0].replace(/x/g,"")
-    }
-    else if(episode_Name.search(/Episode\s\d+/g)>=0)
-    {
-        epN = episode_Name.match(/Episode\s\d+/g)[0].replace(/Episode\s/g,"")
-    }
-    else if(episode_Name.search(/\d+\s/g)>=0)
-    {
-        epN = episode_Name.match(/\d+\s/g)[0].replace(/\s/g,"")
-    }
-    epN =parseInt(epN)
-    // alert(epN)
-    return epN
-}
-function shorten_display_name(actual_name){
-  var name = actual_name
-  if(actual_name.length > TEXT_CLIP_LENGTH)
-     name = actual_name.slice(0,TEXT_CLIP_LENGTH-3) + "..."
-  return name
-
-}
 function  showProgress(progressMessage){
   $("#progress").html("")
   progressMessage.forEach( pmsg=>{
     $("#progress").append("<p>"+progressMessage+"</p>")
   })
-  $("#progress").show().delay(PROGRESS_MESSAGE_VANISH_DELAY).fadeOut();
+  $("#progress").show().delay(myutil.PROGRESS_MESSAGE_VANISH_DELAY).fadeOut();
 }

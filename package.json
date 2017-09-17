@@ -6,9 +6,13 @@
     "scripts": {
         "start" : "electron ."
     },
+    "license": "LGPL-3.0",
     "repository" : "https://github.com/debjeetmaj/divyadarshi",
     "author" : "Debjeet Majumdar",
     "devDependencies":{
         "electron" : "~1.6.2"
+    },
+    "dependencies": {
+        "jquery":"~3.2.1"
     }
 }
