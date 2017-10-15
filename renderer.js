@@ -344,8 +344,10 @@ function repaint_watchingview(){
   }
   else{
     $("#watching_default_message").hide()
-    $("#watching_list").html("")
-    watching["show_ids"].forEach(id =>{
+    $("#watching_list").html("");
+    var count = 6;
+    for(var i=0;i<watching["show_ids"].length && i< count ;i++){
+      var id= watching["show_ids"][i];
       var ep = library.shows[watching[id][0]].seasons[watching[id][1]].episodes[watching[id][2]]
       // console.log(JSON.stringify(ep))
       var short_name = myutil.shorten_display_name(ep.display_name)
@@ -354,7 +356,7 @@ function repaint_watchingview(){
       $("#w_episode_"+id).data("season_index",watching[id][1])
       $("#w_episode_"+id).data("episode_index",watching[id][2])
       $("#w_episode_"+id).click(function(){onWatchingTileClick($( this ).data("show_index"),$( this ).data("season_index"),$( this ).data("episode_index"))})
-    })
+    }
     $("#watching_list").show()
   }
 }
@@ -446,8 +448,9 @@ function onEpisodeTileClick(index,add_to_watchlist){
   showProgress(["Now Playing "+ep.display_name])
   if(add_to_watchlist){
     //clone the currently_on object to avoid error
-    if(watching[currently_on[0]]==null)
+    if(watching[currently_on[0]]==null){
       watching["show_ids"].push(currently_on[0])
+    }
     watching[currently_on[0]] = currently_on.slice(0)
     eventEmitter.emit('watching_updated')
   }
